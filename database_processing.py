@@ -35,7 +35,7 @@ def find_person(user_input):
     """По введенным пользователем имени, фамилии и дате рождения функция
     определяет, есть ли юзер в базе данных. return 0 - нет в базе, return 1 - есть в базе
     """
-    in_base_flag = 0
+    person_info = [0, 0]
     DB_1 = sqlite3.connect("users.db")
     cur = DB_1.cursor()
     cur.execute("""SELECT * FROM all_users""")
@@ -43,25 +43,10 @@ def find_person(user_input):
     # print(all_users)
     for user in all_users:
         if user[1] == user_input[0] and user[2] == user_input[1] and user[3] == user_input[2]:
-            in_base_flag = 1
-    return in_base_flag
+            person_info[0] = 1
+            person_info[1] = user[4]
+    return person_info
 
-
-def find_vip(user_input):
-    """По введенным пользователем имени, фамилии и дате рождения функция
-    определяет, является ли пользователь випом и можно ли ему давать доступ к данным
-    о металлах. Return 0 = не является, return 1 = является випом
-    """
-    in_base_flag = 0
-    DB_1 = sqlite3.connect("users.db")
-    cur = DB_1.cursor()
-    cur.execute("""SELECT * FROM all_users""")
-    all_users = cur.fetchall()
-    # print(all_users)
-    for user in all_users:
-        if user[1] == user_input[0] and user[2] == user_input[1] and user[3] == user_input[2] and user[4] == 1:
-            in_base_flag = 1
-    return in_base_flag
 
 def output_all_db():
     """Функция только для back_end!"""
@@ -80,6 +65,4 @@ print(find_person(test_arg))
 print(find_person(test_arg_1))
 print(find_person(test_arg_2))
 
-print(find_vip(test_arg))
-print(find_vip(test_arg_2))
 output_all_db()
