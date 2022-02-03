@@ -2,7 +2,8 @@ from datetime import datetime, timedelta
 import urllib.request
 import shutil
 import csv
-
+import sqlite3
+crypto_upload_date = datetime.today().strftime("%Y-%m-%d")
 
 crypto_names = {
     'Bitcoin': 'BTC',
@@ -31,6 +32,7 @@ crypto_extra = {
 
 
 def main(name, duration):
+
     date1, date2 = get_dates(duration)
     curdate = date2
     date1 = in_secs(date1)
@@ -41,7 +43,7 @@ def main(name, duration):
     result = [dat[1] for dat in data]
     dates = [dat[0] for dat in data]
     numbers = sub_dates(curdate, dates)
-
+    date_update()
     return result, numbers
 
 
@@ -89,9 +91,11 @@ def query_assemble(name, date1, date2):
     type_id = crypto_extra[rub]
     date1 = int(date1)
     date2 = int(date2)
+
     query = "https://query1.finance.yahoo.com/v7/finance/download/{0}{1}?" \
             "period1={2}&period2={3}&interval=1d&events=history&includeAdjustedClose=true".format(name_id, type_id, date1, date2)
 # https://query1.finance.yahoo.com/v7/finance/download/BTC-USD?period1=1602288000&period2=1635011768&interval=1d&events=history&includeAdjustedClose=true
+
     return query
 
 
@@ -129,4 +133,15 @@ def sub_dates(curdate, dates):
     return numbers
 
 
+def date_update():
+    DB_1 = sqlite3.connect("updates.db")
+    cur = DB_1.cursor()
+    cur.execute("""UPDATE update_date  SET last_update=(?) WHERE name="crypto" """, (crypto_upload_date,))
+    DB_1.commit()
+    pass
+
+
+
+
 print(main('Ethereum', 10))
+print(crypto_upload_date)

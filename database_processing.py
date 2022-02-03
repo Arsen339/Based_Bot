@@ -1,4 +1,4 @@
-# Обработка базы данных
+# Обработка базы данных пользователей
 import sqlite3
 
 def create_base_struct():
@@ -15,6 +15,7 @@ def create_base_struct():
         
         );
     """ )
+    DB_1.commit()
 
 def fill_db():
     DB_1 = sqlite3.connect("users.db")
@@ -22,13 +23,14 @@ def fill_db():
     # Заполнение базы даных
     # В дальнейшем новые пользователи вписываются администратором вручную
     # В случае необходимости раскомментить
-    # cur.execute(""" INSERT INTO all_users  VALUES(NULL, "Alexey", "Kozin", 2001, 1)""")
-    # cur.execute(""" INSERT INTO all_users VALUES(NULL, "Artyom", "Gromov", 1999, 1)""")
-    # cur.execute(""" INSERT INTO all_users VALUES(NULL, "Arsen", "Pitometz", 2000, 0)""")
-    # cur.execute(""" INSERT INTO all_users VALUES(NULL, "Alexey", "Djakov", 2002, 0)""")
-    # cur.execute(""" INSERT INTO all_users VALUES(NULL, NULL, NULL, NULL)""")
-    # DB_1.commit()
-    pass
+
+    cur.execute(""" INSERT INTO all_users  VALUES(NULL, "Alexey", "Kozin", 2001, 1)""")
+    cur.execute(""" INSERT INTO all_users VALUES(NULL, "Artyom", "Gromov", 1999, 1)""")
+    cur.execute(""" INSERT INTO all_users VALUES(NULL, "Arsen", "Pitometz", 2000, 0)""")
+    cur.execute(""" INSERT INTO all_users VALUES(NULL, "Alexey", "Djakov", 2002, 0)""")
+    # cur.execute(""" INSERT INTO all_users VALUES(NULL, NULL, NULL, NULL, NULL)""")
+    DB_1.commit()
+
 
 
 def find_person(user_input):
@@ -55,6 +57,15 @@ def output_all_db():
     cur.execute("""SELECT * FROM all_users""")
     all_users = cur.fetchall()
     print(all_users)
+
+
+create_base_struct()
+fill_db()
+
+
+
+
+
 
 
 test_arg = ["Alexey", "Kozin", 2001]

@@ -1,8 +1,8 @@
 import urllib.request
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
-
-
+import sqlite3
+crypto_upload_date = datetime.today().strftime("%Y-%m-%d")
 url = "https://www.cbr.ru/hd_base/metall/metall_base_new/?UniDbQuery.Posted=True&UniDbQuery.From=23.09.2021&UniDbQuery.To=23.10.2021&UniDbQuery.Gold=true&UniDbQuery.Silver=true&UniDbQuery.Platinum=true&UniDbQuery.Palladium=true&UniDbQuery.so=1"
 case_table = {
     'au': 1,
@@ -19,7 +19,7 @@ def menu(name, duration):  # name = 4 different 2 letter names. duration: days f
     numeration = sub_dates(date2, dates)
     
     array, numeration = closing_holes(array, numeration, duration)
-    
+    date_update()
     return array, numeration
 
 
@@ -127,5 +127,15 @@ def html_parser(filename, data0, name):
 
     return result, dates
 
+def date_update():
+    DB_1 = sqlite3.connect("updates.db")
+    cur = DB_1.cursor()
+    cur.execute("""UPDATE update_date  SET last_update=(?) WHERE name="metal" """, (crypto_upload_date,))
+    DB_1.commit()
+    pass
 
-# print(menu("au", 10))
+
+
+
+
+print(menu("au", 10))

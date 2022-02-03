@@ -40,6 +40,6 @@ for dat in data:
 
 print(i)
 
-with open("C:/Users/Admin/Desktop/dbs/header.csv", "w") as out:
+with open("D:/Based_bot/dbs/header.csv", "w") as out:
     for dat in data:
         out.write("{0};{1}\n".format(dat[0], dat[1]))

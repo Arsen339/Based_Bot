@@ -3,14 +3,15 @@ import urllib.request
 import shutil
 import openpyxl
 import csv
-
-
+import sqlite3
+crypto_upload_date = datetime.today().strftime("%Y-%m-%d")
+dates = []
 def menu(name, duration):  # name = 34 different 3 letter names. duration: days from now
     date1, date2 = get_dates(duration)
 
-    save_file_name = "C:/Users/Admin/Desktop/dbs/tmp.xlsx"
-    header_filename = "C:/Users/Admin/Desktop/dbs/header.csv"
-    tmp_csv_filename = "C:/Users/Admin/Desktop/dbs/tmp.csv"
+    save_file_name = "D:/Based_bot/dbs/tmp.xlsx"
+    header_filename = "D:/Based_bot/dbs/header.csv"
+    tmp_csv_filename = "D:/Based_bot/dbs/tmp.csv"
 
     qid = get_label_id(header_filename, name)
     query = query_assembly(qid, date1, date2)
@@ -40,7 +41,7 @@ def menu(name, duration):  # name = 34 different 3 letter names. duration: days 
         numeration.append((datetime.today() - date_date).days)
 
     result, numeration = closing_holes(result, numeration, duration)
-
+    date_update()
     return result, numeration
 
 def closing_holes(array, numeration, duration):
@@ -106,5 +107,11 @@ def get_label_id(filename, label):
         i = i + 1
     return -1
 
+def date_update():
+    DB_1 = sqlite3.connect("updates.db")
+    cur = DB_1.cursor()
+    cur.execute("""UPDATE update_date  SET last_update=(?) WHERE name="currency" """, (crypto_upload_date,))
+    DB_1.commit()
+    pass
 
-# print(menu('USD', 30))
+print(menu('USD', 30))
