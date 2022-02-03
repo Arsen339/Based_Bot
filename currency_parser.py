@@ -32,12 +32,36 @@ def menu(name, duration):  # name = 34 different 3 letter names. duration: days 
         rows = []
         for row in reader:
             result.append(float(row[2]))
-        # print(result)
+            dates.append(row[1])
 
-    numeration = list(range(duration))  # days to curdate
-    # print(numeration)
+    numeration = []
+    for date in dates:
+        date_date = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
+        numeration.append((datetime.today() - date_date).days)
+
+    result, numeration = closing_holes(result, numeration, duration)
+
     return result, numeration
 
+def closing_holes(array, numeration, duration):
+    new_arr = []
+    new_num = list(range(duration))
+    flag = False                 # indicator that there was an already valid element
+    for i in range(duration):
+        try:
+            arr_elm = array[numeration.index(i)]
+            new_arr.append(arr_elm)
+            if not flag:
+                for j in range(i):
+                    new_arr[j] = new_arr[i]
+                flag = True
+        except ValueError:
+            if flag:
+                new_arr.append(new_arr[i-1])
+            else:
+                new_arr.append(0)
+    new_arr = new_arr[0:duration]
+    return new_arr, new_num
 
 def get_dates(duration):
     curdate_raw = datetime.date(datetime.now())

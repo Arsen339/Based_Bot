@@ -45,6 +45,28 @@ def main(name, duration):
     return result, numbers
 
 
+def closing_holes(array, numeration, duration):
+    new_arr = []
+    new_num = list(range(duration))
+    flag = False                 # indicator that there was an already valid element
+    for i in range(duration):
+        try:
+            arr_elm = array[numeration.index(i)]
+            new_arr.append(arr_elm)
+            if not flag:
+                for j in range(i):
+                    new_arr[j] = new_arr[i]
+                flag = True
+        except ValueError:
+            if flag:
+                new_arr.append(new_arr[i-1])
+            else:
+                new_arr.append(0)
+    new_arr = new_arr[0:duration]
+    
+    return new_arr, new_num
+    
+    
 def in_secs(date):
     date_d = datetime.strptime(date, "%d.%m.%Y")
     seconds = date_d.timestamp()

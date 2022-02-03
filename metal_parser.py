@@ -17,8 +17,32 @@ def menu(name, duration):  # name = 4 different 2 letter names. duration: days f
     html = get_html("tmp.html", date1, date2)
     array, dates = html_parser("tmp.html", html, name)
     numeration = sub_dates(date2, dates)
-    # print(numeration)
+    
+    array, numeration = closing_holes(array, numeration, duration)
+    
     return array, numeration
+
+
+def closing_holes(array, numeration, duration):
+    new_arr = []
+    new_num = list(range(duration))
+    flag = False                 # indicator that there was an already valid element
+    for i in range(duration):
+        try:
+            arr_elm = array[numeration.index(i)]
+            new_arr.append(arr_elm)
+            if not flag:
+                for j in range(i):
+                    new_arr[j] = new_arr[i]
+                flag = True
+        except ValueError:
+            if flag:
+                new_arr.append(new_arr[i-1])
+            else:
+                new_arr.append(0)
+    new_arr = new_arr[0:duration]
+
+    return new_arr, new_num
 
 
 def get_dates(duration):
