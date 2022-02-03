@@ -36,8 +36,8 @@ def main(name, duration):
     date1 = in_secs(date1)
     date2 = in_secs(date2)+10000
     query = query_assemble(name, date1, date2)
-    download_file(query, "C:/Users/Admin/Desktop/dbs/tmp.csv")
-    data = extract_data("C:/Users/Admin/Desktop/dbs/tmp.csv", duration)
+    download_file(query, "D:/Based_bot/dbs/tmp.csv")
+    data = extract_data("D:/Based_bot/dbs/tmp.csv", duration)
     result = [dat[1] for dat in data]
     dates = [dat[0] for dat in data]
     numbers = sub_dates(curdate, dates)
@@ -129,4 +129,4 @@ def sub_dates(curdate, dates):
     return numbers
 
 
-main('Ethereum', 10)
+print(main('Ethereum', 10))
