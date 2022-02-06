@@ -1,6 +1,7 @@
 # Обработка базы данных пользователей
 import sqlite3
 
+
 def create_base_struct():
     """Вызывается для первичной инициализации и в последствии для изменения структуры таблицы"""
     DB_1 = sqlite3.connect("users.db")
@@ -17,6 +18,7 @@ def create_base_struct():
     """ )
     DB_1.commit()
 
+
 def fill_db():
     DB_1 = sqlite3.connect("users.db")
     cur = DB_1.cursor()
@@ -30,7 +32,6 @@ def fill_db():
     cur.execute(""" INSERT INTO all_users VALUES(NULL, "Alexey", "Djakov", 2002, 0)""")
     # cur.execute(""" INSERT INTO all_users VALUES(NULL, NULL, NULL, NULL, NULL)""")
     DB_1.commit()
-
 
 
 def find_person(user_input):
@@ -59,14 +60,8 @@ def output_all_db():
     print(all_users)
 
 
-create_base_struct()
-fill_db()
-
-
-
-
-
-
+# create_base_struct()
+# fill_db()
 
 test_arg = ["Alexey", "Kozin", 2001]
 test_arg_1 = ["Sanya", "Poggi", 1950]

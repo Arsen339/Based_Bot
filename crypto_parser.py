@@ -4,7 +4,7 @@ import shutil
 import csv
 import sqlite3
 crypto_upload_date = datetime.today().strftime("%Y-%m-%d")
-
+temp_arr = ([''], [''])
 crypto_names = {
     'Bitcoin': 'BTC',
     'Ethereum': 'ETH',
@@ -134,6 +134,7 @@ def sub_dates(curdate, dates):
 
 
 def date_update():
+    """Обновление даты"""
     DB_1 = sqlite3.connect("updates.db")
     cur = DB_1.cursor()
     cur.execute("""UPDATE update_date  SET last_update=(?) WHERE name="crypto" """, (crypto_upload_date,))
@@ -142,6 +143,3 @@ def date_update():
 
 
 
-
-print(main('Ethereum', 10))
-print(crypto_upload_date)

@@ -6,7 +6,7 @@ import csv
 import sqlite3
 crypto_upload_date = datetime.today().strftime("%Y-%m-%d")
 dates = []
-def menu(name, duration):  # name = 34 different 3 letter names. duration: days from now
+def menue(name, duration):  # name = 34 different 3 letter names. duration: days from now
     date1, date2 = get_dates(duration)
 
     save_file_name = "D:/Based_bot/dbs/tmp.xlsx"
@@ -43,6 +43,7 @@ def menu(name, duration):  # name = 34 different 3 letter names. duration: days 
     result, numeration = closing_holes(result, numeration, duration)
     date_update()
     return result, numeration
+
 
 def closing_holes(array, numeration, duration):
     new_arr = []
@@ -107,6 +108,7 @@ def get_label_id(filename, label):
         i = i + 1
     return -1
 
+
 def date_update():
     DB_1 = sqlite3.connect("updates.db")
     cur = DB_1.cursor()
@@ -114,4 +116,5 @@ def date_update():
     DB_1.commit()
     pass
 
-print(menu('USD', 30))
+
+print(menue('USD', 30))
