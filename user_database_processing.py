@@ -1,6 +1,6 @@
 # Обработка базы данных пользователей
 import sqlite3
-
+import os
 
 def create_base_struct():
     """Вызывается для первичной инициализации и в последствии для изменения структуры таблицы"""
@@ -45,7 +45,13 @@ def find_person(user_input):
     all_users = cur.fetchall()
     # print(all_users)
     for user in all_users:
-        if user[1] == user_input[0] and user[2] == user_input[1] and user[3] == user_input[2]:
+        if user[1] == user_input[1]:
+            print("user[1] == user_input[1] ")
+        if user[2] == user_input[2]:
+            print("user[2] == user_input[2]")
+        if int(user[3]) == int(user_input[3]):
+            print("++")
+        if user[1] == user_input[1] and user[2] == user_input[2] and int(user[3]) == int(user_input[3]):
             person_info[0] = 1
             person_info[1] = user[4]
     return person_info
@@ -63,12 +69,16 @@ def output_all_db():
 # create_base_struct()
 # fill_db()
 
-test_arg = ["Alexey", "Kozin", 2001]
-test_arg_1 = ["Sanya", "Poggi", 1950]
-test_arg_2 = ["Arsen", "Pitometz", 2000]
 
+test_arg_1 = ["ee", "Sanya", "Poggi", 1950]
+test_arg_2 = ["reg", "Arsen", "Pitometz", 2000]
+test_arg = ["reg", "Alexey", "Kozin", 2001]
+"""
 print(find_person(test_arg))
 print(find_person(test_arg_1))
 print(find_person(test_arg_2))
 
 output_all_db()
+"""
+
+

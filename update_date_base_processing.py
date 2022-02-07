@@ -2,7 +2,7 @@
 import sqlite3
 from datetime import datetime, timedelta
 now_date = datetime.today().strftime("%Y-%m-%d")
-
+now_date = datetime.strptime(now_date, "%Y-%m-%d")
 
 def create_base_struct():
     """Вызывается для первичной инициализации и в последствии для изменения структуры таблицы"""
@@ -38,12 +38,16 @@ def fill_db():
 # fill_db()
 
 
+
 def metal_update_time_check():
     """Проверяем, является ли информация в БД актуальной"""
     DB_1 = sqlite3.connect("updates.db")
     cur = DB_1.cursor()
     cur.execute("""SELECT last_update FROM update_date WHERE name = 'metal' """)
-    then_date = now_date
+
+    then_date = cur.fetchall()
+    then_date = datetime.strptime(then_date[0][0], "%Y-%m-%d")
+    DB_1.commit()
     if now_date > then_date:
         return 0
     else:
@@ -55,11 +59,14 @@ def crypto_update_time_check():
     DB_1 = sqlite3.connect("updates.db")
     cur = DB_1.cursor()
     cur.execute("""SELECT last_update FROM update_date WHERE name = 'crypto' """)
-    then_date = now_date
+
+    then_date = cur.fetchall()
+    then_date = datetime.strptime(then_date[0][0], "%Y-%m-%d")
     if now_date > then_date:
         return 0
     else:
         return 1
+
 
 
 def currency_update_time_check():
@@ -67,7 +74,8 @@ def currency_update_time_check():
     DB_1 = sqlite3.connect("updates.db")
     cur = DB_1.cursor()
     cur.execute("""SELECT last_update FROM update_date WHERE name = 'currency' """)
-    then_date = now_date
+    then_date = cur.fetchall()
+    then_date = datetime.strptime(then_date[0][0], "%Y-%m-%d")
     if now_date > then_date:
         return 0
     else:

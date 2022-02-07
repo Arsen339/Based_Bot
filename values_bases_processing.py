@@ -1,6 +1,5 @@
 # Обработка баз данных со значениями криптовалюты
 import sqlite3
-import shutil
 import os
 from metal_parser import menu
 from crypto_parser import main
@@ -351,6 +350,47 @@ def fill_currency_db():
 
     DB_1.commit()
 
+
+def get_currency(needed_value):
+    """Получим значения валют и вернем массив"""
+    respond = []
+    DB_2 = sqlite3.connect("currencies.db")
+    cur = DB_2.cursor()
+    cur.execute(f"""SELECT value FROM {needed_value}""")
+    answer_arr = cur.fetchall()
+    DB_2.commit()
+    for i in range(0, 30):
+        respond.append(str(i) + " days ago price was " + str(answer_arr[i]))
+    return respond
+
+
+def get_crypto(needed_value):
+    """Получим значения криптовалют и вернем массив"""
+    respond = []
+    DB_2 = sqlite3.connect("cryptos.db")
+    cur = DB_2.cursor()
+    cur.execute(f"""SELECT value FROM {needed_value}""")
+    answer_arr = cur.fetchall()
+    DB_2.commit()
+    for i in range(0, 30):
+        respond.append(str(i) + " days ago price was " + str(answer_arr[i]))
+    return respond
+
+
+def get_metal(needed_value):
+    """Получим значения металлов и вернем массив"""
+    respond = []
+    DB_2 = sqlite3.connect("metals.db")
+    cur = DB_2.cursor()
+    cur.execute(f"""SELECT value FROM {needed_value}""")
+    answer_arr = cur.fetchall()
+    DB_2.commit()
+    for i in range(0, 30):
+        respond.append(str(i) + " days ago price was " + str(answer_arr[i]))
+    return respond
+
+
+# print(get_currency("CNY"))
 
 # fill_crypto_db()
 # create_crypto_base_struct()

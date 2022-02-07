@@ -117,4 +117,4 @@ def date_update():
     pass
 
 
-print(menue('USD', 30))
+

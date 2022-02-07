@@ -136,6 +136,3 @@ def date_update():
 
 
 
-
-
-print(menu("au", 10))
