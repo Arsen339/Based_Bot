@@ -4,8 +4,7 @@ import os
 from metal_parser import menu
 from crypto_parser import main
 from currency_parser import menue
-
-
+from graphics import display, delete
 
 
 def create_crypto_base():
@@ -157,17 +156,17 @@ def fill_crypto_db():
     # Заполнение базы даных
     temp_arr = main('Ethereum', 31)
     for i in range(0, 30):
-        cur.execute(""" INSERT INTO ETH  VALUES(?,?)""", (i, temp_arr[0][30 - i],))
+        cur.execute(""" INSERT INTO Ethereum  VALUES(?,?)""", (i, temp_arr[0][30 - i],))
     temp_arr = main('Bitcoin', 31)
     for i in range(0, 30):
-        cur.execute(""" INSERT INTO BTC  VALUES(?,?)""", (i, temp_arr[0][30 - i],))
+        cur.execute(""" INSERT INTO Bitcoin  VALUES(?,?)""", (i, temp_arr[0][30 - i],))
     temp_arr = main('Litecoin', 31)
     for i in range(0, 30):
-        cur.execute(""" INSERT INTO LTC  VALUES(?,?)""", (i, temp_arr[0][30 - i],))
+        cur.execute(""" INSERT INTO Litecoin  VALUES(?,?)""", (i, temp_arr[0][30 - i],))
 
     temp_arr = main('BitcoinCash', 31)
     for i in range(0, 30):
-        cur.execute(""" INSERT INTO BCH  VALUES(?,?)""", (i, temp_arr[0][30 - i],))
+        cur.execute(""" INSERT INTO BitcoinCash  VALUES(?,?)""", (i, temp_arr[0][30 - i],))
     temp_arr = main('Monero', 31)
     for i in range(0, 30):
         cur.execute(""" INSERT INTO XMR  VALUES(?,?)""", (i, temp_arr[0][30 - i],))
@@ -212,9 +211,6 @@ def fill_crypto_db():
         cur.execute(""" INSERT INTO EMC2  VALUES(?,?)""", (i, temp_arr[0][30 - i],))
 
     DB_1.commit()
-
-
-
 
 
 def create_metal_base():
@@ -277,6 +273,7 @@ def fill_metal_db():
         cur.execute(""" INSERT INTO PD  VALUES(?,?)""", (i, temp_arr[0][30 - i],))
 
     DB_1.commit()
+
 
 def create_currency_base():
     """Вызывается для первичной инициализации и в последствии для изменения структуры таблицы"""
@@ -361,7 +358,11 @@ def get_currency(needed_value):
     DB_2.commit()
     for i in range(0, 30):
         respond.append(str(i) + " days ago price was " + str(answer_arr[i]))
-    return respond
+
+    # extra part: image display
+    image_src = display(answer_arr, needed_value)
+
+    return respond, image_src
 
 
 def get_crypto(needed_value):
@@ -374,7 +375,11 @@ def get_crypto(needed_value):
     DB_2.commit()
     for i in range(0, 30):
         respond.append(str(i) + " days ago price was " + str(answer_arr[i]))
-    return respond
+
+    # extra part: image display
+    image_src = display(answer_arr, needed_value)
+
+    return respond, image_src
 
 
 def get_metal(needed_value):
@@ -387,14 +392,8 @@ def get_metal(needed_value):
     DB_2.commit()
     for i in range(0, 30):
         respond.append(str(i) + " days ago price was " + str(answer_arr[i]))
-    return respond
 
+    # extra part: image display
+    image_src = display(answer_arr, needed_value)
 
-# print(get_currency("CNY"))
-
-# fill_crypto_db()
-# create_crypto_base_struct()
-# create_metal_base()
-# fill_metal_db()
-# create_currency_base()
-# fill_currency_db()
+    return respond, image_src
