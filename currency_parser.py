@@ -4,14 +4,18 @@ import shutil
 import openpyxl
 import csv
 import sqlite3
+
+
 crypto_upload_date = datetime.today().strftime("%Y-%m-%d")
 dates = []
+
+
 def menue(name, duration):  # name = 34 different 3 letter names. duration: days from now
     date1, date2 = get_dates(duration)
 
-    save_file_name = "D:/Based_bot/dbs/tmp.xlsx"
-    header_filename = "D:/Based_bot/dbs/header.csv"
-    tmp_csv_filename = "D:/Based_bot/dbs/tmp.csv"
+    save_file_name = "dbs/tmp.xlsx"
+    header_filename = "dbs/header.csv"
+    tmp_csv_filename = "dbs/tmp.csv"
 
     qid = get_label_id(header_filename, name)
     query = query_assembly(qid, date1, date2)
@@ -64,6 +68,7 @@ def closing_holes(array, numeration, duration):
                 new_arr.append(0)
     new_arr = new_arr[0:duration]
     return new_arr, new_num
+
 
 def get_dates(duration):
     curdate_raw = datetime.date(datetime.now())
