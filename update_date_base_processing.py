@@ -4,7 +4,6 @@ from datetime import datetime, timedelta
 now_date = datetime.today().strftime("%Y-%m-%d")
 now_date = datetime.strptime(now_date, "%Y-%m-%d")
 
-
 def create_base_struct():
     """Вызывается для первичной инициализации и в последствии для изменения структуры таблицы"""
     DB_1 = sqlite3.connect("updates.db")
@@ -39,6 +38,7 @@ def fill_db():
 # fill_db()
 
 
+
 def metal_update_time_check():
     """Проверяем, является ли информация в БД актуальной"""
     DB_1 = sqlite3.connect("updates.db")
@@ -66,6 +66,7 @@ def crypto_update_time_check():
         return 0
     else:
         return 1
+
 
 
 def currency_update_time_check():

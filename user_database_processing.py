@@ -44,21 +44,16 @@ def find_person(user_input):
     cur.execute("""SELECT * FROM all_users""")
     all_users = cur.fetchall()
     # print(all_users)
-    try:
-        for user in all_users:
-            if user[1] == user_input[1]:
-                print("user[1] == user_input[1] ")
-            if user[2] == user_input[2]:
-                print("user[2] == user_input[2]")
-            if int(user[3]) == int(user_input[3]):
-                print("++")
-            if user[1] == user_input[1] and user[2] == user_input[2] and int(user[3]) == int(user_input[3]):
-                person_info[0] = 1
-                person_info[1] = user[4]
-
-    except IndexError:
-        print("error in user registration")
-
+    for user in all_users:
+        if user[1] == user_input[1]:
+            print("user[1] == user_input[1] ")
+        if user[2] == user_input[2]:
+            print("user[2] == user_input[2]")
+        if int(user[3]) == int(user_input[3]):
+            print("++")
+        if user[1] == user_input[1] and user[2] == user_input[2] and int(user[3]) == int(user_input[3]):
+            person_info[0] = 1
+            person_info[1] = user[4]
     return person_info
 
 
